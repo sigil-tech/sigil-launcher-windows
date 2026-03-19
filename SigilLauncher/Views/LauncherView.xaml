@@ -1,0 +1,68 @@
+<Page
+    x:Class="SigilLauncher.Views.LauncherView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SigilLauncher.Views">
+
+    <Grid Padding="24" RowSpacing="16" Width="360" Height="280">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Status header -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <FontIcon Grid.Column="0" x:Name="StatusIcon" Glyph="&#xE768;" FontSize="24" Margin="0,0,8,0" />
+            <TextBlock Grid.Column="1" Text="Sigil" FontSize="20" FontWeight="Bold" />
+            <TextBlock Grid.Column="3" x:Name="StatusText" Text="{x:Bind ViewModel.StatusText, Mode=OneWay}"
+                       FontSize="12" VerticalAlignment="Center" />
+        </Grid>
+
+        <!-- Separator -->
+        <Border Grid.Row="1" Height="1" Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+        <!-- Readiness indicators -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="16">
+            <local:ReadinessIndicator Label="VM" IsReady="{x:Bind ViewModel.State, Converter={StaticResource VmRunningConverter}, Mode=OneWay}" />
+            <local:ReadinessIndicator Label="SSH" IsReady="{x:Bind ViewModel.SshReady, Mode=OneWay}" />
+            <local:ReadinessIndicator Label="Daemon" IsReady="{x:Bind ViewModel.DaemonReady, Mode=OneWay}" />
+        </StackPanel>
+
+        <!-- Spacer -->
+        <Grid Grid.Row="3" />
+
+        <!-- Error message -->
+        <TextBlock Grid.Row="4"
+                   Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                   Foreground="Red" FontSize="11"
+                   TextWrapping="Wrap" TextAlignment="Center"
+                   Visibility="{x:Bind ViewModel.ErrorMessage, Converter={StaticResource NullToVisibilityConverter}, Mode=OneWay}" />
+
+        <!-- Action buttons -->
+        <StackPanel Grid.Row="5" Orientation="Horizontal" Spacing="12" HorizontalAlignment="Stretch">
+            <Button Content="Start"
+                    Command="{x:Bind ViewModel.StartCommand}"
+                    Visibility="{x:Bind ViewModel.CanStart, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                    Style="{StaticResource AccentButtonStyle}"
+                    HorizontalAlignment="Stretch" />
+            <Button Content="Stop"
+                    Command="{x:Bind ViewModel.StopCommand}"
+                    Visibility="{x:Bind ViewModel.CanStop, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                    HorizontalAlignment="Stretch" />
+            <Button Content="Open Shell"
+                    Command="{x:Bind ViewModel.OpenShellCommand}"
+                    IsEnabled="{x:Bind ViewModel.CanOpenShell, Mode=OneWay}" />
+        </StackPanel>
+    </Grid>
+
+</Page>

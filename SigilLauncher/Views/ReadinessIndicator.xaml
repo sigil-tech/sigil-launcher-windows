@@ -1,0 +1,18 @@
+<UserControl
+    x:Class="SigilLauncher.Views.ReadinessIndicator"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StackPanel Orientation="Horizontal" Spacing="4">
+        <Ellipse
+            x:Name="StatusDot"
+            Width="8" Height="8"
+            Fill="{x:Bind DotFill, Mode=OneWay}" />
+        <TextBlock
+            x:Name="LabelText"
+            Text="{x:Bind Label, Mode=OneWay}"
+            FontSize="12"
+            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+    </StackPanel>
+
+</UserControl>

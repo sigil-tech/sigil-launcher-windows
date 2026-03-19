@@ -1,0 +1,47 @@
+<Page
+    x:Class="SigilLauncher.Views.ConfigurationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ScrollViewer Padding="24">
+        <StackPanel Spacing="24" Width="440">
+
+            <!-- Resources section -->
+            <StackPanel Spacing="12">
+                <TextBlock Text="Resources" FontWeight="SemiBold" FontSize="16" />
+
+                <StackPanel Spacing="4">
+                    <TextBlock FontSize="13">
+                        <Run Text="Memory: " />
+                        <Run x:Name="MemoryLabel" Text="{x:Bind ViewModel.MemoryGB, Mode=OneWay}" />
+                        <Run Text=" GB" />
+                    </TextBlock>
+                    <Slider Minimum="2" Maximum="16" StepFrequency="1"
+                            Value="{x:Bind ViewModel.MemoryGB, Mode=TwoWay}" />
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                    <TextBlock FontSize="13">
+                        <Run Text="CPU Cores: " />
+                        <Run x:Name="CpuLabel" Text="{x:Bind ViewModel.CpuCores, Mode=OneWay}" />
+                    </TextBlock>
+                    <Slider Minimum="1" Maximum="16" StepFrequency="1"
+                            Value="{x:Bind ViewModel.CpuCores, Mode=TwoWay}" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Workspace section -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="Workspace" FontWeight="SemiBold" FontSize="16" />
+                <TextBox PlaceholderText="Path to workspace"
+                         Text="{x:Bind ViewModel.WorkspacePath, Mode=TwoWay}" />
+            </StackPanel>
+
+            <!-- Save -->
+            <Button Content="Save" Style="{StaticResource AccentButtonStyle}"
+                    Command="{x:Bind ViewModel.SaveConfigurationCommand}" />
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>
