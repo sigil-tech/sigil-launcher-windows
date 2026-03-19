@@ -18,6 +18,9 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
       - name: Publish self-contained executable
         run: >
           dotnet publish SigilLauncher/SigilLauncher.csproj

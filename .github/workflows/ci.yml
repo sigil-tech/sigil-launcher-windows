@@ -17,11 +17,14 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
       - name: Restore dependencies
         run: dotnet restore SigilLauncher.sln -p:Platform=x64
 
       - name: Build
-        run: dotnet build SigilLauncher.sln -c Debug -p:Platform=x64 --no-restore
+        run: msbuild SigilLauncher.sln -p:Configuration=Debug -p:Platform=x64 -nologo
 
       - name: Build release
-        run: dotnet build SigilLauncher.sln -c Release -p:Platform=x64
+        run: msbuild SigilLauncher.sln -p:Configuration=Release -p:Platform=x64 -nologo
