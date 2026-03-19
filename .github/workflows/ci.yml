@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore SigilLauncher.sln -p:Platform=x64
+
+      - name: Build
+        run: dotnet build SigilLauncher.sln -c Debug -p:Platform=x64 --no-restore
+
+      - name: Build release
+        run: dotnet build SigilLauncher.sln -c Release -p:Platform=x64
